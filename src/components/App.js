@@ -1,55 +1,30 @@
-
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import '../styles/App.css';
-
 const App = () => {
-  const [maxSum, setMaxSum] = useState(50);
-  const [rangeA, setRangeA] = useState(0);
-  const [rangeB, setRangeB] = useState(50);
-  const [sum, setSum] = useState(rangeA + rangeB);
-
-  const handleRangeAChange = (e) => {
-    const value = parseInt(e.target.value);
-    setRangeA(value);
-    setMaxSum(Math.min(value + rangeB, 50));
-    setSum(value + rangeB);
-  };
-
-  const handleRangeBChange = (e) => {
-    const value = parseInt(e.target.value);
-    setRangeB(value);
-    setMaxSum(Math.min(rangeA + value, 50));
-    setSum(rangeA + value);
-  };
-
+  const [a,setA] = useState(0)
+  const [b,setB] = useState(50)
+  const [t,setT] = useState(50)
   return (
-    <div id="max-sum-holder">
-      <input
-        type="number"
-        value={maxSum}
-        onChange={(e) => setMaxSum(Math.min(50, parseInt(e.target.value)))}
-      />
+    <div id="main">
+
+      <div id="max-sum-holder">
+        Input max sum:-
+        <input type={"number"} value={t} onChange={e=> setT(e.target.value)}/>
+      </div>
       <div id="range-a-holder">
-        <input
-          type="range"
-          value={rangeA}
-          max={maxSum}
-          onChange={handleRangeAChange}
-        />
-        <div id="range-a-value">{rangeA}</div>
+        <input type={"range"} value={a} onChange={(e)=>setA(e.target.value)} max={t-b}/>
+        <span id="range-a-value">{a}</span>
       </div>
-      <div id="range-b-holder">
-        <input
-          type="range"
-          value={rangeB}
-          max={maxSum}
-          onChange={handleRangeBChange}
-        />
-        <div id="range-b-value">{rangeB}</div>
+      <div  id="range-b-holder">
+        <input type={"range"} value={b} onChange={(e)=>setB(e.target.value)} max={t-a}/>
+        <span id="range-b-value">{b}</span>
       </div>
-      <div id="sum">{sum}</div>
+      <div id="sum">
+            {[a,b].map(Number).reduce((sum,cur)=>sum+cur,0)}
+      </div>
     </div>
-  );
-};
+  )
+}
+
 
 export default App;
